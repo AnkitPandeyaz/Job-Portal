@@ -1,50 +1,3 @@
-// import React, { useState } from "react";
-// import { Link, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-
-// function Signup() {
-//     const [name, setName] = useState('');
-//     const [email, setEmail] = useState('');
-//     const [password, setPassword] = useState('');
-//     const navigate = useNavigate();
-
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         try {
-//             const response = await axios.post('http://localhost:3000/sign-in', { name, email, password }, { withCredentials: true });
-//             console.log(response.data);
-//             // Redirect or handle the response as needed
-//             navigate('/dashboard'); // Navigate to the dashboard or appropriate page after successful signup
-//         } catch (error) {
-//             console.error('Error handling response:', error);
-//         }
-//     };
-
-//     const handleLogin = async (e) => {
-//         e.preventDefault();
-//         try {
-//             const response = await axios.post('http://localhost:3000/login', { email, password }, { withCredentials: true });
-//             console.log(response.data);
-//             if (response.data.Status === "Success") {
-//                 // Redirect to dashboard or perform other actions
-//                 console.log('Login successful');
-//                 // Here, you might want to redirect to the dashboard or reload the page to fetch dashboard data
-//                 window.location.reload();
-//             }
-//         } catch (error) {
-//             console.error('Error logging in:', error);
-//         }
-//     };
-
-//     const fetchDashboard = async () => {
-//         try {
-//             const response = await axios.get('http://localhost:3000/dashboard', { withCredentials: true });
-//             console.log('Dashboard data:', response.data);
-//         } catch (error) {
-//             console.error('Error fetching dashboard:', error);
-//         }
-//     };
-
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -117,4 +70,4 @@ function Signup() {
 }
 
 export default Signup;
-
+ 
