@@ -85,26 +85,36 @@ import axios from 'axios';
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/login', { email, password })
-            .then(res => {
-                if (res && res.data && res.data.Status === "Success") {
-                    navigate('/dashboard');
-                } else {
-                    console.error("Invalid response:", res);
-                }
-            })
-            .catch(err => console.error("Error handling response:", err));
+        try {
+            const response = await axios.post('http://localhost:3000/login', { email, password }, { withCredentials: true });
+            console.log(response.data);
+            if (response.data.Status === "Success") {
+                // Redirect to dashboard or perform other actions
+                console.log('Login successful');
+                fetchDashboard();
+            }
+        } catch (error) {
+            console.error('Error logging in:', error);
+        }
+    };
+
+    const fetchDashboard = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/dashboard', { withCredentials: true });
+            console.log('Dashboard data:', response.data);
+        } catch (error) {
+            console.error('Error fetching dashboard:', error);
+        }
     };
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue to-purple-600">
             <div className="bg-white p-8 rounded-lg shadow-lg w-96">
                 <h2 className="text-4xl font-bold mb-6 text-center text-blue-600">Login</h2>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleLogin}>
                     <div className="mb-4">
                         <label htmlFor="email" className="block font-semibold text-gray-700 mb-2">Email</label>
                         <input

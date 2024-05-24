@@ -1,6 +1,6 @@
-// import { useState } from "react";
-// import axios from 'axios';
+// import React, { useState } from "react";
 // import { Link, useNavigate } from 'react-router-dom';
+// import axios from 'axios';
 
 // function Signup() {
 //     const [name, setName] = useState('');
@@ -8,66 +8,42 @@
 //     const [password, setPassword] = useState('');
 //     const navigate = useNavigate();
 
-//     const handleSubmit = (e) => {
+//     const handleSubmit = async (e) => {
 //         e.preventDefault();
-//         axios.post('http://localhost:3000/sign-in', { name, email, password })
-//         .then(res => {
-//             navigate('/login');
-//         }).catch(err => console.log(err));
+//         try {
+//             const response = await axios.post('http://localhost:3000/sign-in', { name, email, password }, { withCredentials: true });
+//             console.log(response.data);
+//             // Redirect or handle the response as needed
+//             navigate('/dashboard'); // Navigate to the dashboard or appropriate page after successful signup
+//         } catch (error) {
+//             console.error('Error handling response:', error);
+//         }
 //     };
 
-//     return (
-//         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue to-purple-400">
-//             <div className="bg-white p-3 rounded w-1/4">
-//                 <h2 className="text-2xl mb-4">Register</h2>
-//                 <form onSubmit={handleSubmit}>
-//                     <div className="mb-3">
-//                         <label htmlFor="name" className="font-semibold">Name</label>
-//                         <input
-//                             type="text"
-//                             placeholder="Enter Name"
-//                             autoComplete="off"
-//                             name="name"
-//                             className="border rounded w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-//                             onChange={(e) => setName(e.target.value)}
-//                         />
-//                     </div>
-//                     <div className="mb-3">
-//                         <label htmlFor="email" className="font-semibold">Email</label>
-//                         <input
-//                             type="email"
-//                             placeholder="Enter Email"
-//                             autoComplete="off"
-//                             name="email"
-//                             className="border rounded w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-//                             onChange={(e) => setEmail(e.target.value)}
-//                         />
-//                     </div>
-//                     <div className="mb-3">
-//                         <label htmlFor="password" className="font-semibold">Password</label>
-//                         <input
-//                             type="password"
-//                             placeholder="Enter Password"
-//                             name="password"
-//                             className="border rounded w-full py-2 px-3 focus:outline-none focus:border-blue-500"
-//                             onChange={(e) => setPassword(e.target.value)}
-//                         />
-//                     </div>
-//                     <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded w-full">
-//                         Register
-//                     </button>
-//                 </form>
-//                 <p className="mt-4">Already have an account?</p>
-//                 <Link to="/login" className="border bg-blue text-gray font-bold py-2 px-4 rounded block mt-2 w-full text-center">
-//                     Login
-//                 </Link>
-//             </div>
-//         </div>
-//     );
-// }
+//     const handleLogin = async (e) => {
+//         e.preventDefault();
+//         try {
+//             const response = await axios.post('http://localhost:3000/login', { email, password }, { withCredentials: true });
+//             console.log(response.data);
+//             if (response.data.Status === "Success") {
+//                 // Redirect to dashboard or perform other actions
+//                 console.log('Login successful');
+//                 // Here, you might want to redirect to the dashboard or reload the page to fetch dashboard data
+//                 window.location.reload();
+//             }
+//         } catch (error) {
+//             console.error('Error logging in:', error);
+//         }
+//     };
 
-// export default Signup;
-
+//     const fetchDashboard = async () => {
+//         try {
+//             const response = await axios.get('http://localhost:3000/dashboard', { withCredentials: true });
+//             console.log('Dashboard data:', response.data);
+//         } catch (error) {
+//             console.error('Error fetching dashboard:', error);
+//         }
+//     };
 
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
@@ -82,12 +58,15 @@ function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await axios.post('http://localhost:3000/sign-in', { name, email, password }, { withCredentials: true });
-          console.log(response.data);
+            const response = await axios.post('http://localhost:3000/sign-in', { name, email, password }, { withCredentials: true });
+            console.log(response.data);
+            // Redirect or handle the response as needed
+            navigate('/dashboard'); // Navigate to the dashboard or appropriate page after successful signup
         } catch (error) {
-          console.error('Error handling response:', error);
+            console.error('Error signing up:', error);
+            // Handle error: display error message to the user
         }
-      };
+    };
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue to-purple-600">
