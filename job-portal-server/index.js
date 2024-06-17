@@ -9,6 +9,7 @@ const dotenv = require('dotenv');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const UserModel = require('./model/user');
 
+
 dotenv.config();
 const port = process.env.PORT || 3000;
 

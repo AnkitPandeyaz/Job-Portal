@@ -1,25 +1,17 @@
-// import firebase from 'firebase/app';
-// import 'firebase/auth';
-// import 'firebase/firestore'; // If you're using Firestore
 
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
-// // Initialize Firebase
-// const app = firebase.initializeApp(firebaseConfig);
+const firebaseConfig = {
+ 
+};
 
-// export const auth = app.auth();
-// export const firestore = app.firestore(); // Export firestore if you're using it
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-// import firebase from 'firebase/app';
-// import 'firebase/auth';
-// import 'firebase/firestore';
+export { auth, db, storage };
 
-
-// // Check if Firebase app is already initialized
-// if (!firebase.apps.length) {
-//     firebase.initializeApp(firebaseConfig);
-// }
-
-// const auth = firebase.auth();
-// const firestore = firebase.firestore();
-
-// export { auth, firestore };

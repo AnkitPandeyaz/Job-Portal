@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { auth } from '../firebase/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+
+
 
 function Signup() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    
+    
 
+  
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/sign-in', { name, email, password }, { withCredentials: true });
-            console.log(response.data);
-            // Redirect or handle the response as needed
-            navigate('/dashboard'); // Navigate to the dashboard or appropriate page after successful signup
+            // Create a new user with email and password
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+            // Redirect to dashboard after successful signup
+            navigate('/dashboard');
         } catch (error) {
             console.error('Error signing up:', error);
             // Handle error: display error message to the user
@@ -61,7 +68,7 @@ function Signup() {
                     </button>
                 </form>
                 <p className="mt-6 text-center text-gray-600">Already have an account?</p>
-                <Link to="/" className="bg-red-500 text-white font-semibold py-2 px-4 rounded-md block text-center mt-2 hover:bg-red-600 transition duration-300">
+                <Link to="/login" className="bg-red-500 text-white font-semibold py-2 px-4 rounded-md block text-center mt-2 hover:bg-red-600 transition duration-300">
                     Login
                 </Link>
             </div>
@@ -70,4 +77,3 @@ function Signup() {
 }
 
 export default Signup;
- 

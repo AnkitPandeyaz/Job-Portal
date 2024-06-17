@@ -9,43 +9,32 @@ import JobDetails from "../Pages/JobDetails";
 import Login from "../components/Login";
 import Signin from "../components/Signin";
 import Dashboard from "../components/Dashboard";
-
+import DashboardUpdate from "../components/DashboardUpdate";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: (
-                <App />
-        ),
+        element: <App />,
         children: [
             {
                 path: "/",
                 element: <Home />,
             },
             {
-                path: "post-job",
-                element: (
-                    <PostJob />
-                ),
+                path: "/post-job",
+                element: <PostJob/>,
             },
             {
-                path: "my-jobs",
-                element: (
-                    <MyJobs />
-                ),
-
+                path: "/my-jobs",
+                element: <MyJobs/>,
             },
             {
-                path: "salary",
+                path: "/salary",
                 element: <SalaryPage />,
             },
             {
-                path: "edit-job/:id",
-                element: (
-
-                    <UpdateJob />
-
-                ),
+                path: "/edit-job/:id",
+                element: <UpdateJob />,
                 loader: ({ params }) => fetch(`http://localhost:3000/all-jobs/${params.id}`),
             },
             {
@@ -62,13 +51,14 @@ const router = createBrowserRouter([
             },
             {
                 path: "/dashboard",
-                element: <Dashboard />,
+                element:<Dashboard />
             },
-
-
+            {
+                path: "/dashboard-update",
+                element:<DashboardUpdate />
+            },
         ],
     },
 ]);
 
 export default router;
-

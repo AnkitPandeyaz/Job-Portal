@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Correct state names
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuToggler = () => {
     setIsMenuOpen(!isMenuOpen);

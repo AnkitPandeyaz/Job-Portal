@@ -1,15 +1,20 @@
 import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase/firebase';
 
 function ProtectedRoute({ component: Component, ...rest }) {
-    const token = document.cookie.split('; ').find(row => row.startsWith('token='));
-    const isAuthenticated = token ? true : false;
+    const [user, loading] = useAuthState(auth);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <Route
             {...rest}
             render={props =>
-                isAuthenticated ? (
+                user ? (
                     <Component {...props} />
                 ) : (
                     <Navigate to="/" />
@@ -20,3 +25,4 @@ function ProtectedRoute({ component: Component, ...rest }) {
 }
 
 export default ProtectedRoute;
+

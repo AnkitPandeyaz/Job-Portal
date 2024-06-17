@@ -1,34 +1,44 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+import { auth } from '../firebase/firebase';
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} from 'firebase/auth';
+
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/login', { email, password }, { withCredentials: true });
-            console.log(response.data);
-            if (response.data.Status === "Success") {
-                // Redirect to dashboard or perform other actions
-                console.log('Login successful');
-                fetchDashboard();
-            }
+            // Sign in the user with email and password
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+            // Redirect to dashboard after successful login
+            navigate('/dashboard');
         } catch (error) {
             console.error('Error logging in:', error);
+            // Handle error: display error message to the user
+            setError(error.message);
+        }
+
+        
+    };
+
+    const handleGoogleLogin = async () => {
+        try {
+            const provider = new GoogleAuthProvider();
+            const userCredential = await signInWithPopup(auth, provider);
+            navigate('/dashboard');
+        } catch (error) {
+            console.error('Error logging in with Google:', error);
+            // Handle error: display error message to the user
+            setError(error.message);
         }
     };
 
-    const fetchDashboard = async () => {
-        try {
-            const response = await axios.get('http://localhost:3000/dashboard', { withCredentials: true });
-            console.log('Dashboard data:', response.data);
-        } catch (error) {
-            console.error('Error fetching dashboard:', error);
-        }
-    };
+
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue to-purple-600">
@@ -59,6 +69,12 @@ function Login() {
                     <button type="submit" className="bg-blue text-white font-semibold py-2 px-4 rounded-md w-full hover:bg-blue-700 transition duration-300">
                         Login
                     </button>
+                    <button 
+                    onClick={handleGoogleLogin} 
+                    className="bg-red-500 text-white font-semibold py-2 px-4 rounded-md w-full block text-center mt-2 hover:bg-red-600 transition duration-300"
+                >
+                    Sign in with Google
+                </button>
                 </form>
                 <p className="mt-6 text-center text-gray-600">Don't have an account?</p>
                 <Link to="/sign-in" className="bg-red-500 text-white font-semibold py-2 px-4 rounded-md block text-center mt-2 hover:bg-red-600 transition duration-300">
@@ -70,5 +86,3 @@ function Login() {
 }
 
 export default Login;
-
-
